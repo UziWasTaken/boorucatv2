@@ -120,4 +120,48 @@
   max-width: 100%;
   max-height: 80vh;
   object-fit: contain;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.info {
+  margin-top: 1rem;
+}
+
+.tags {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  background: #f0f0f0;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: #333;
+  text-decoration: none;
+}
+
+.tag:hover {
+  background: #e0e0e0;
+}
+
+.source {
+  margin-top: 1rem;
+  color: #666;
+}
+
+.source a {
+  color: #006FFA;
+  text-decoration: none;
+}
+
+.source a:hover {
+  text-decoration: underline;
 } 
