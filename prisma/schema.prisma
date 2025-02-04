@@ -10,9 +10,9 @@ datasource db {
 model Post {
   id           String    @id @default(cuid())
   imageUrl     String
-  thumbnailUrl String?   // Added for video thumbnails
-  mediaType    String    @default("image") // "image" or "video"
-  duration     Float?    // Added for video duration
+  thumbnailUrl String?
+  mediaType    String    @default("image")
+  duration     Float?
   tags         String[]
   source       String?
   userId       String
