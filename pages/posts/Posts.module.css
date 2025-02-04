@@ -1,0 +1,204 @@
+.postsContainer {
+  margin: 0 30px;
+}
+
+.postsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.uploadButton {
+  padding: 5px 10px;
+  background: #006FFA;
+  color: white;
+  text-decoration: none;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.uploadButton:hover {
+  background: #0056cc;
+}
+
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 10px;
+}
+
+.postCard {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 5px;
+  text-align: center;
+}
+
+.postThumbnail {
+  width: 150px;
+  height: 150px;
+  background: #f2f2f2;
+  position: relative;
+  margin: 0 auto;
+}
+
+.thumbnailImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Video indicator */
+.postThumbnail[data-type="video"]::after {
+  content: '▶';
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.postInfo {
+  margin-top: 5px;
+  font-size: 11px;
+}
+
+.tags {
+  display: none;
+}
+
+.tag {
+  color: #006ffa;
+  text-decoration: none;
+}
+
+.tag:hover {
+  text-decoration: underline;
+}
+
+.postActions {
+  margin-top: 5px;
+}
+
+.editButton, .deleteButton {
+  font-size: 11px;
+  padding: 2px 5px;
+  margin: 0 2px;
+  border: 1px solid #ccc;
+  background: #f2f2f2;
+  color: #006ffa;
+  cursor: pointer;
+}
+
+.editButton:hover, .deleteButton:hover {
+  background: #e6e6e6;
+}
+
+.noResults {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.contentWithSidebar {
+  display: flex;
+  padding: 10px;
+  gap: 20px;
+  background: #fff;
+}
+
+.sidebar {
+  width: 200px;
+  flex-shrink: 0;
+}
+
+.searchSection {
+  margin-bottom: 20px;
+}
+
+.searchSection input {
+  width: 100%;
+  padding: 4px;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.searchSection button {
+  width: 100%;
+  padding: 4px;
+  font-size: 12px;
+}
+
+.tagCategories {
+  font-size: 12px;
+}
+
+.tagCategory {
+  margin-bottom: 15px;
+}
+
+.tagCategory h4 {
+  font-size: 14px;
+  margin: 0 0 5px 0;
+  color: #333;
+}
+
+.tagItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+
+.tagOperator {
+  color: #666;
+}
+
+.tagLink {
+  color: #006ffa;
+  text-decoration: none;
+}
+
+.tagCount {
+  color: #666;
+  font-size: 11px;
+}
+
+.mainContent {
+  flex-grow: 1;
+}
+
+/* Pagination styles */
+.pagination {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.pagination a {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  color: #006FFA;
+  text-decoration: none;
+}
+
+.pagination a:hover {
+  background: #f5f5f5;
+}
+
+.pagination a.active {
+  background: #006FFA;
+  color: white;
+  border-color: #006FFA;
+} 

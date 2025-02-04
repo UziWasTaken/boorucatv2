@@ -1,0 +1,76 @@
+.container {
+  min-height: 100vh;
+  background: #fff;
+}
+
+.header {
+  background: #006ffa;
+  padding: 10px;
+  color: white;
+}
+
+.title {
+  font-size: 24px;
+  margin: 0 0 10px 0;
+}
+
+.mainNav, .subNav {
+  display: flex;
+  gap: 15px;
+  padding: 5px 0;
+}
+
+.mainNav {
+  background: #006ffa;
+}
+
+.subNav {
+  background: #00549b;
+}
+
+.mainNav a, .subNav a {
+  color: white;
+  text-decoration: none;
+}
+
+.mainNav a:hover, .subNav a:hover {
+  text-decoration: underline;
+}
+
+.active {
+  font-weight: bold;
+}
+
+.content {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+}
+
+.sidebar {
+  width: 200px;
+  flex-shrink: 0;
+}
+
+.search {
+  margin-bottom: 20px;
+}
+
+.search input {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.search button {
+  width: 100%;
+}
+
+.main {
+  flex: 1;
+}
+
+.imageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+} 

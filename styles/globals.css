@@ -1,0 +1,68 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: verdana, sans-serif;
+  font-size: 80%;
+  background: #fff;
+}
+
+a {
+  color: #006ffa;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h2 {
+  font-size: 16px;
+  margin: 0 0 10px 0;
+}
+
+input, button {
+  padding: 5px;
+}
+
+#content {
+  margin: 0 30px;
+}
+
+.searchBox {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.searchBox input[type="text"] {
+  width: 80%;
+  padding: 5px;
+  margin-right: 5px;
+}
+
+.searchBox input[type="submit"] {
+  padding: 5px 10px;
+}
+
+.stats {
+  text-align: center;
+  color: #666;
+  font-size: 12px;
+  margin: 10px 0;
+}
+
+.counter {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.counter img {
+  height: 100px;
+} 

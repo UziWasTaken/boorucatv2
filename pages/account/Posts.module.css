@@ -1,0 +1,107 @@
+.postsContainer {
+  padding: 20px;
+}
+
+.postsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.uploadButton {
+  padding: 8px 16px;
+  background: #006FFA;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.uploadButton:hover {
+  background: #0056cc;
+}
+
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.postCard {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.postCard:hover {
+  transform: translateY(-2px);
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%; /* 1:1 Aspect Ratio */
+}
+
+.image {
+  object-fit: cover;
+}
+
+.postInfo {
+  padding: 10px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.tag {
+  background: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+.postActions {
+  display: flex;
+  gap: 8px;
+}
+
+.editButton, .deleteButton {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.editButton {
+  background: #006FFA;
+  color: white;
+  text-decoration: none;
+}
+
+.deleteButton {
+  background: #dc3545;
+  color: white;
+}
+
+.editButton:hover {
+  background: #0056cc;
+}
+
+.deleteButton:hover {
+  background: #c82333;
+}
+
+.noResults {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  color: #666;
+} 

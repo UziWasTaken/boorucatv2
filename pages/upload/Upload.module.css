@@ -1,0 +1,125 @@
+.uploadContainer {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.formGroup label {
+  font-weight: bold;
+}
+
+.formGroup input {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.formGroup input[type="file"] {
+  padding: 4px;
+}
+
+.previewContainer {
+  text-align: center;
+  margin: 15px 0;
+  padding: 10px;
+  background: #f2f2f2;
+  border: 1px solid #ccc;
+}
+
+.preview {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.submitButton {
+  padding: 10px;
+  background: #006FFA;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background: #0056cc;
+}
+
+.submitButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.error {
+  padding: 10px;
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  margin-bottom: 15px;
+}
+
+.tagInputContainer {
+  position: relative;
+}
+
+.tagSuggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.tagCategory {
+  padding: 8px;
+}
+
+.tagCategory h4 {
+  margin: 0 0 4px 0;
+  font-size: 12px;
+  color: #666;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tagSuggestion {
+  background: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 2px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.tagSuggestion:hover {
+  background: #e0e0e0;
+}
+
+.thumbnailPreview {
+  margin-top: 10px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+.thumbnailPreview h3 {
+  font-size: 14px;
+  margin-bottom: 10px;
+} 
