@@ -1,242 +1,118 @@
-import type { NextPage, GetServerSideProps } from 'next'
-import Head from 'next/head'
-import Link from 'next/link'
-import Image from 'next/image'
-import { prisma } from '../../lib/prisma'
-import styles from './Posts.module.css'
-import { Post } from '../../components/Post'
-import { transformCloudinaryUrl } from '../../utils/url'
+import { useState } from 'react';
+import { GetServerSideProps } from 'next';
+import Link from 'next/link';
+import { prisma } from '../../lib/prisma';
+import styles from './Posts.module.css';
+import { Post } from '../../components/Post';
 
-interface Post {
-  id: string
-  imageUrl: string
-  thumbnailUrl?: string | null
-  mediaType: 'image' | 'video'
-  duration?: number | null
-  tags: string[]
-  source: string | null
-  userId: string
-  createdAt: string
-  user?: {
-    username?: string | null
-    email?: string | null
-  }
+interface PostData {
+  id: string;
+  imageUrl: string;
+  thumbnailUrl?: string;
+  mediaType: string;
+  duration?: number;
+  tags: string[];
 }
 
-interface TagCount {
-  tag: string
-  count: number
+interface Props {
+  posts: PostData[];
+  tags: {
+    copyright: Array<{name: string, count: number}>;
+    artist: Array<{name: string, count: number}>;
+    general: Array<{name: string, count: number}>;
+  };
 }
 
-interface PostsPageProps {
-  posts: Post[]
-  tagCounts: TagCount[]
-  searchTags: string[]
-  pagination: {
-    current: number
-    total: number
-    pid: number
-  }
-}
+export default function Posts({ posts, tags }: Props) {
+  const [searchTerm, setSearchTerm] = useState('');
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  // Handle both legacy and new URL parameters
-  const { page: pageParam, s, tags: queryTags, pid } = query
-  
-  // Calculate page number from either pid or page parameter
-  const page = pid ? Math.floor(parseInt(pid as string) / 42) + 1 
-    : parseInt(pageParam as string) || 1
-  
-  const limit = 42
-  const offset = (page - 1) * limit
-  
-  // Handle tags from either format
-  const searchTags = queryTags ? 
-    (typeof queryTags === 'string' ? queryTags.split(' ') : queryTags).filter(Boolean) 
-    : []
-
-  // Build the where clause for the query
-  const where = searchTags.length > 0 ? {
-    tags: {
-      hasEvery: searchTags
-    }
-  } : {}
-
-  const [posts, total] = await Promise.all([
-    prisma.post.findMany({
-      where,
-      orderBy: { createdAt: 'desc' },
-      skip: offset,
-      take: limit,
-      select: {
-        id: true,
-        imageUrl: true,
-        thumbnailUrl: true,
-        mediaType: true,
-        duration: true,
-        tags: true,
-        source: true,
-        userId: true,
-        createdAt: true,
-        user: {
-          select: {
-            username: true,
-            email: true
-          }
-        }
-      }
-    }),
-    prisma.post.count({ where })
-  ])
-
-  // Get tag counts only from filtered posts
-  const allTags = posts.flatMap(post => post.tags)
-  const tagCounts = Object.entries(
-    allTags.reduce((acc, tag) => {
-      acc[tag] = (acc[tag] || 0) + 1
-      return acc
-    }, {} as Record<string, number>)
-  ).map(([tag, count]) => ({ tag, count }))
-
-  // Format URLs to use your domain
-  const postsWithPublicUrls = posts.map(post => ({
-    ...post,
-    imageUrl: transformCloudinaryUrl(post.imageUrl) || post.imageUrl,
-    thumbnailUrl: post.thumbnailUrl ? transformCloudinaryUrl(post.thumbnailUrl) : null
-  }))
-
-  return {
-    props: {
-      posts: JSON.parse(JSON.stringify(postsWithPublicUrls)),
-      tagCounts: tagCounts,
-      searchTags,
-      pagination: {
-        current: page,
-        total: Math.ceil(total / limit),
-        pid: offset
-      }
-    }
-  }
-}
-
-const PostsPage: NextPage<PostsPageProps> = ({ posts, tagCounts, searchTags, pagination }) => {
   return (
-    <>
-      <Head>
-        <title>{searchTags?.length ? searchTags.join(' ') + ' - ' : ''}Posts - Kazuru</title>
-      </Head>
-      <div id="content" className={styles.contentWithSidebar}>
-        <div className={styles.sidebar}>
-          <div className={styles.searchSection}>
-            <h3>Search</h3>
-            <form action="/index.php" method="get">
-              <input type="hidden" name="page" value="post" />
-              <input type="hidden" name="s" value="list" />
-              <input 
-                type="text" 
-                name="tags" 
-                placeholder="Search tags..." 
-                defaultValue={searchTags?.join(' ')}
-              />
-              <button type="submit">Search</button>
-            </form>
-          </div>
-
-          <div className={styles.tagsSection}>
-            <h3>Tags</h3>
-            <div className={styles.tagCategories}>
-              <div className={styles.tagCategory}>
-                <h4>Copyright</h4>
-                {tagCounts
-                  .filter(({ tag }) => tag.startsWith('copyright:'))
-                  .map(({ tag, count }) => (
-                    <div key={tag} className={styles.tagItem}>
-                      <span className={styles.tagOperator}>+</span>
-                      <Link 
-                        href={`/index.php?page=post&s=list&tags=${tag}`} 
-                        className={styles.tagLink}
-                      >
-                        {tag.replace('copyright:', '')}
-                      </Link>
-                      <span className={styles.tagCount}>{count}</span>
-                    </div>
-                  ))}
-              </div>
-
-              <div className={styles.tagCategory}>
-                <h4>General</h4>
-                {tagCounts
-                  .filter(({ tag }) => !tag.includes(':'))
-                  .map(({ tag, count }) => (
-                    <div key={tag} className={styles.tagItem}>
-                      <span className={styles.tagOperator}>+</span>
-                      <Link 
-                        href={`/index.php?page=post&s=list&tags=${tag}`} 
-                        className={styles.tagLink}
-                      >
-                        {tag}
-                      </Link>
-                      <span className={styles.tagCount}>{count}</span>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          </div>
+    <div className={styles.contentWithSidebar}>
+      <aside className={styles.sidebar}>
+        <div className={styles.searchSection}>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search tags..."
+          />
+          <button>Search</button>
         </div>
 
-        <div className={styles.mainContent}>
-          <div className={styles.postsHeader}>
-            <h2>Posts</h2>
-            <Link 
-              href="/index.php?page=post&s=add" 
-              className={styles.uploadButton}
-            >
-              Upload New Post
-            </Link>
-          </div>
-          <div className={styles.postsGrid}>
-            {posts.map((post) => (
-              <div key={post.id} className={styles.postThumbnail} data-type={post.mediaType}>
-                <Link href={`/index.php?page=post&s=view&id=${post.id}`}>
-                  {post.mediaType === 'video' ? (
-                    <video
-                      src={post.imageUrl}
-                      className={styles.thumbnailImage}
-                      preload="metadata"
-                      muted
-                      loop
-                      autoPlay
-                      playsInline
-                    />
-                  ) : (
-                    <img
-                      src={post.imageUrl}
-                      alt={post.tags.join(' ')}
-                      className={styles.thumbnailImage}
-                    />
-                  )}
+        <div className={styles.tagCategories}>
+          <div className={styles.tagCategory}>
+            <h4>Copyright</h4>
+            {tags.copyright.map(tag => (
+              <div key={tag.name} className={styles.tagItem}>
+                <span className={styles.tagOperator}>?</span>
+                <Link href={`/posts?tags=${tag.name}`} className={styles.tagLink}>
+                  {tag.name}
                 </Link>
+                <span className={styles.tagCount}>{tag.count}</span>
               </div>
             ))}
           </div>
-          <div className={styles.pagination}>
-            {Array.from({ length: pagination.total }, (_, i) => {
-              const pid = i * 42
-              return (
-                <Link 
-                  key={i + 1}
-                  href={`/index.php?page=post&s=list${searchTags.length ? `&tags=${searchTags.join('+')}` : ''}&pid=${pid}`}
-                  className={pagination.current === i + 1 ? styles.active : ''}
-                >
-                  {i + 1}
+
+          <div className={styles.tagCategory}>
+            <h4>Artist</h4>
+            {tags.artist.map(tag => (
+              <div key={tag.name} className={styles.tagItem}>
+                <span className={styles.tagOperator}>?</span>
+                <Link href={`/posts?tags=${tag.name}`} className={styles.tagLink}>
+                  {tag.name}
                 </Link>
-              )
-            })}
+                <span className={styles.tagCount}>{tag.count}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className={styles.tagCategory}>
+            <h4>General</h4>
+            {tags.general.map(tag => (
+              <div key={tag.name} className={styles.tagItem}>
+                <span className={styles.tagOperator}>?</span>
+                <Link href={`/posts?tags=${tag.name}`} className={styles.tagLink}>
+                  {tag.name}
+                </Link>
+                <span className={styles.tagCount}>{tag.count}</span>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
-    </>
-  )
+      </aside>
+
+      <main className={styles.mainContent}>
+        <div className={styles.postsGrid}>
+          {posts.map(post => (
+            <Post key={post.id} {...post} />
+          ))}
+        </div>
+      </main>
+    </div>
+  );
 }
 
-export default PostsPage
+export const getServerSideProps: GetServerSideProps = async () => {
+  const posts = await prisma.post.findMany({
+    include: {
+      tags: true
+    },
+    orderBy: {
+      createdAt: 'desc'
+    }
+  });
+
+  // You'll need to implement tag counting logic here
+  const tags = {
+    copyright: [],
+    artist: [],
+    general: []
+  };
+
+  return {
+    props: {
+      posts: JSON.parse(JSON.stringify(posts)),
+      tags
+    }
+  };
+};
