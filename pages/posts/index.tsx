@@ -94,19 +94,39 @@ export default function Posts({ posts, tags }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const posts = await prisma.post.findMany({
-    include: {
-      tags: true
+    select: {
+      id: true,
+      imageUrl: true,
+      thumbnailUrl: true,
+      mediaType: true,
+      duration: true,
+      tags: true,
+      createdAt: true
     },
     orderBy: {
       createdAt: 'desc'
     }
   });
 
-  // You'll need to implement tag counting logic here
+  // Calculate tag counts from posts
+  const tagCounts = posts.reduce((acc, post) => {
+    post.tags.forEach(tag => {
+      acc[tag] = (acc[tag] || 0) + 1;
+    });
+    return acc;
+  }, {} as Record<string, number>);
+
+  // Categorize tags (you can implement your own categorization logic)
   const tags = {
-    copyright: [],
-    artist: [],
-    general: []
+    copyright: Object.entries(tagCounts)
+      .filter(([tag]) => tag.startsWith('copyright:'))
+      .map(([name, count]) => ({ name, count })),
+    artist: Object.entries(tagCounts)
+      .filter(([tag]) => tag.startsWith('artist:'))
+      .map(([name, count]) => ({ name, count })),
+    general: Object.entries(tagCounts)
+      .filter(([tag]) => !tag.startsWith('copyright:') && !tag.startsWith('artist:'))
+      .map(([name, count]) => ({ name, count }))
   };
 
   return {
