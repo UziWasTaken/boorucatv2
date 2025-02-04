@@ -4,15 +4,23 @@ interface VideoPlayerProps {
   src: string;
   thumbnailUrl?: string;
   duration?: number;
+  poster?: string;
+  className?: string;
 }
 
-export const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, thumbnailUrl, duration }) => {
+export const VideoPlayer: React.FC<VideoPlayerProps> = ({ 
+  src, 
+  thumbnailUrl, 
+  duration,
+  poster,
+  className = ''
+}) => {
   return (
-    <div className="video-container">
+    <div className={`video-container ${className}`}>
       <video 
         controls
         preload="metadata"
-        poster={thumbnailUrl}
+        poster={poster || thumbnailUrl}
       >
         <source src={src} type="video/mp4" />
         Your browser does not support the video tag.
