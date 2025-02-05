@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { prisma } from '../lib/prisma';
-import styles from './Posts.module.css';
+import styles from './index.module.css';
 
 interface PostData {
   id: string;

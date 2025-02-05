@@ -1,0 +1,88 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.contentWithSidebar {
+  display: flex;
+  gap: 20px;
+  padding: 10px;
+  background: #fff;
+}
+
+.sidebar {
+  width: 200px;
+  flex-shrink: 0;
+}
+
+.searchSection {
+  margin-bottom: 20px;
+}
+
+.searchSection input {
+  width: 100%;
+  padding: 4px;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.searchSection button {
+  width: 100%;
+  padding: 4px;
+  font-size: 12px;
+}
+
+.mainContent {
+  flex-grow: 1;
+}
+
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.postThumbnail {
+  width: 150px;
+  height: 150px;
+  background: #f2f2f2;
+  position: relative;
+  margin: 0 auto;
+}
+
+.thumbnailImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.searchBox {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 10px;
+  text-align: center;
+}
+
+.searchBox input {
+  width: 80%;
+  padding: 5px;
+  margin-right: 5px;
+}
+
+.searchBox button {
+  padding: 5px 10px;
+  background: #006FFA;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.stats {
+  text-align: center;
+  padding: 10px;
+  color: #666;
+  font-size: 0.8em;
+} 
