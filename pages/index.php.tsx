@@ -10,6 +10,10 @@ interface PostData {
   thumbnailUrl?: string;
   tags: string[];
   mediaType: string;
+  createdAt: string;
+  user: {
+    username: string;
+  };
 }
 
 interface SinglePostData extends PostData {
@@ -73,7 +77,7 @@ export default function PHPPage({ posts }: { posts: PostData[] }) {
 
   // Handle single post view
   if (page === 'post' && s === 'view') {
-    const post = posts.find(p => p.id === queryTags);
+    const post = posts.find(p => p.id === query.id);
     if (!post) return <div>Post not found</div>;
 
     return (
@@ -137,7 +141,7 @@ export default function PHPPage({ posts }: { posts: PostData[] }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { page, s, tags } = query;
+  const { page, s, tags, id } = query;
   
   let where = {};
   if (tags) {
@@ -146,6 +150,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         hasSome: typeof tags === 'string' ? [tags] : tags
       }
     };
+  } else if (id) {
+    where = { id: id as string };
   }
 
   const posts = await prisma.post.findMany({
@@ -155,7 +161,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       imageUrl: true,
       thumbnailUrl: true,
       tags: true,
-      mediaType: true
+      mediaType: true,
+      createdAt: true,
+      user: {
+        select: {
+          username: true
+        }
+      }
     },
     orderBy: {
       createdAt: 'desc'
