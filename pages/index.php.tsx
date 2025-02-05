@@ -12,6 +12,17 @@ interface PostData {
   mediaType: string;
 }
 
+interface SinglePostData extends PostData {
+  user: {
+    username: string;
+  };
+}
+
+interface Props {
+  posts: PostData[];
+  singlePost?: SinglePostData;
+}
+
 export default function PHPPage({ posts }: { posts: PostData[] }) {
   const router = useRouter();
   const { page, s, tags: queryTags } = router.query;
@@ -56,6 +67,56 @@ export default function PHPPage({ posts }: { posts: PostData[] }) {
             ))}
           </div>
         </main>
+      </div>
+    );
+  }
+
+  // Handle single post view
+  if (page === 'post' && s === 'view') {
+    const post = posts.find(p => p.id === queryTags);
+    if (!post) return <div>Post not found</div>;
+
+    return (
+      <div className={styles.postView}>
+        <div className={styles.postContent}>
+          {post.mediaType === 'video' ? (
+            <video 
+              controls
+              className={styles.videoPlayer}
+              poster={post.thumbnailUrl}
+            >
+              <source src={post.imageUrl} type="video/mp4" />
+              Your browser does not support video playback.
+            </video>
+          ) : (
+            <img 
+              src={post.imageUrl} 
+              alt={post.tags.join(' ')} 
+              className={styles.postImage}
+            />
+          )}
+        </div>
+        <div className={styles.postInfo}>
+          <h3>Information</h3>
+          <div className={styles.postDetails}>
+            <p>Posted by: {post.user.username}</p>
+            <p>Posted: {new Date(post.createdAt).toLocaleString()}</p>
+          </div>
+          <div className={styles.postTags}>
+            <h4>Tags</h4>
+            <div className={styles.tagList}>
+              {post.tags.map(tag => (
+                <Link 
+                  key={tag}
+                  href={`/index.php?page=post&s=list&tags=${tag}`}
+                  className={styles.tag}
+                >
+                  {tag}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

@@ -27,6 +27,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <Link href="/forum">Forum</Link>
           <Link href="/stats">Stats</Link>
           <Link href="/help">Help</Link>
+          {session && (
+            <Link href="/my-uploads">My Uploads</Link>
+          )}
         </nav>
         <nav className={styles.subNav}>
           <Link href="/video">Video</Link>

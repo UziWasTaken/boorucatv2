@@ -1,0 +1,58 @@
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.uploadGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.uploadCard {
+  border: 1px solid #ccc;
+  padding: 10px;
+  background: white;
+}
+
+.thumbnail {
+  width: 100%;
+  height: 150px;
+  background: #f2f2f2;
+  margin-bottom: 10px;
+}
+
+.thumbnail img,
+.thumbnail video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.editButton,
+.deleteButton {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background: #f2f2f2;
+  cursor: pointer;
+  font-size: 12px;
+  text-decoration: none;
+  color: #333;
+}
+
+.deleteButton {
+  color: #d00;
+}
+
+.editButton:hover,
+.deleteButton:hover {
+  background: #e6e6e6;
+} 
