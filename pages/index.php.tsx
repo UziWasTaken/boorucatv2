@@ -9,6 +9,7 @@ interface PostData {
   imageUrl: string;
   thumbnailUrl?: string;
   tags: string[];
+  mediaType: string;
 }
 
 export default function PHPPage({ posts }: { posts: PostData[] }) {
@@ -38,12 +39,17 @@ export default function PHPPage({ posts }: { posts: PostData[] }) {
         <main className={styles.mainContent}>
           <div className={styles.postsGrid}>
             {posts.map(post => (
-              <div key={post.id} className={styles.postThumbnail}>
+              <div 
+                key={post.id} 
+                className={styles.postThumbnail}
+                data-type={post.mediaType}
+              >
                 <Link href={`/index.php?page=post&s=view&id=${post.id}`}>
                   <img 
-                    src={post.imageUrl} 
+                    src={post.thumbnailUrl || post.imageUrl} 
                     alt={post.tags.join(' ')}
                     className={styles.thumbnailImage}
+                    loading="lazy"
                   />
                 </Link>
               </div>
@@ -87,7 +93,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       id: true,
       imageUrl: true,
       thumbnailUrl: true,
-      tags: true
+      tags: true,
+      mediaType: true
     },
     orderBy: {
       createdAt: 'desc'

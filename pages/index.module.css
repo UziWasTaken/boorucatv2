@@ -6,14 +6,15 @@
 
 .contentWithSidebar {
   display: flex;
-  gap: 20px;
-  padding: 10px;
+  padding: 0 10px;
   background: #fff;
 }
 
 .sidebar {
-  width: 200px;
+  width: 180px;
   flex-shrink: 0;
+  padding-right: 20px;
+  border-right: 1px solid #eee;
 }
 
 .searchSection {
@@ -25,30 +26,38 @@
   padding: 4px;
   margin-bottom: 4px;
   font-size: 12px;
+  border: 1px solid #ccc;
 }
 
 .searchSection button {
   width: 100%;
   padding: 4px;
   font-size: 12px;
+  background: #006FFA;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 .mainContent {
   flex-grow: 1;
+  padding-left: 20px;
 }
 
 .postsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
+  padding: 10px 0;
 }
 
 .postThumbnail {
   width: 150px;
   height: 150px;
   background: #f2f2f2;
+  border: 1px solid #ccc;
+  padding: 3px;
   position: relative;
-  margin: 0 auto;
 }
 
 .thumbnailImage {
@@ -56,6 +65,19 @@
   height: 100%;
   object-fit: contain;
   display: block;
+}
+
+/* Video indicator */
+.postThumbnail[data-type="video"]::after {
+  content: '▶';
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 12px;
 }
 
 .searchBox {
@@ -70,6 +92,7 @@
   width: 80%;
   padding: 5px;
   margin-right: 5px;
+  border: 1px solid #ccc;
 }
 
 .searchBox button {
@@ -85,4 +108,42 @@
   padding: 10px;
   color: #666;
   font-size: 0.8em;
+}
+
+/* Tag styles */
+.tagCategories {
+  font-size: 12px;
+}
+
+.tagCategory {
+  margin-bottom: 15px;
+}
+
+.tagCategory h4 {
+  font-size: 14px;
+  margin: 0 0 5px 0;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 3px;
+}
+
+.tagItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+
+.tagOperator {
+  color: #666;
+}
+
+.tagLink {
+  color: #006ffa;
+  text-decoration: none;
+}
+
+.tagCount {
+  color: #666;
+  font-size: 11px;
 } 
